@@ -11,7 +11,7 @@ from neo4jrestclient.client import GraphDatabase
 from neo4jrestclient import client
 
 #Base de Datos
-db = GraphDatabase("http://localhost:7474", username="neo4j", password="12345")
+db = GraphDatabase("http://localhost:7474", username="neo4j", password="1234567")
 
 #Principales etiquetas
 Caracteristica = db.labels.create("Caracteristica")
@@ -540,7 +540,6 @@ Dieciocho_70.relationships.create("VJ", Dishonored)
 
 Dieciocho_70.relationships.create("VJ", StarWars)
 Dieciocho_70.relationships.create("VJ", FinalFantasy)
-Dieciocho_70.relationships.create("VJ", DungeonDragons)
 
 Dieciocho_70.relationships.create("VJ", WatchDogs)
 Dieciocho_70.relationships.create("VJ", HorizonZero)
