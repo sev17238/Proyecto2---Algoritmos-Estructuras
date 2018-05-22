@@ -7,3 +7,8 @@ MATCH (n)-[r]->(m) RETURN n, r, m;
 Para borrar la base de datos--------------------
 MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r
 ------------------------------------------------
+********************************************************
+------------------------------------------------
+Para borrar un nodo usuario y sus relaciones----
+MATCH (n { name: 'nombreusuario' }) DETACH DELETE n
+------------------------------------------------

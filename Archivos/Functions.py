@@ -21,6 +21,7 @@ db = GraphDatabase("http://localhost:7474", username="neo4j", password="1234567"
 #genero = db.labels.create("Genero")
 #subgenero = db.labels.create("Subgenero")
 #videojuego = db.labels.create("Videojuego")
+Usuarios = db.labels.create("Usuarios")
 
 #-------------------Metodos para Llevar en control de Coincidencias--------------
 def RecomendacionCaracteristica(caracteristica,listaJ,listaC):
@@ -88,6 +89,59 @@ def RecomendacionSubGenero(subgenero,listaJ,listaC):
         listaC[index] = suma
     return listaC
 
+def RecomendacionConocidos(nomConocido,listaJ,listaC):
+    q = 'MATCH (u:Usuarios)-[r:VJ]->(m:Videojuego) WHERE u.name="'+nomConocido+'" RETURN u, type(r), m'
+    # "db" as defined above
+    results = db.query(q, returns=(client.Node, str, client.Node))
+    for r in results:
+        #print("(%s)-[%s]->(%s)" % (r[0]["name"], r[1], r[2]["name"]))
+        suma = 0
+        index = listaJ.index(r[2]["name"])
+        numero = listaC[index]
+        suma = numero + 1
+        listaC[index] = suma
+    return listaC
+
+def imprimirUsuarios(nomUsuario):
+    print("\nConoce a alguno de los siguientes usuarios: ")
+    q = 'MATCH (u: Usuarios) RETURN u'
+    results = db.query(q, returns=(client.Node, str, client.Node))
+    for r in results:
+        if((r[0]["name"])!= nomUsuario):
+            print(" - " + "%s" % (r[0]["name"]))
+        else:
+            pass
+
+#------------------Metodo que busca si un usuario existe dentro del grafo-----------------
+def buscarUsuarioDentroGrafo(usuario):
+    q = 'MATCH (u: Usuarios) RETURN u'
+    results = db.query(q, returns=(client.Node, str, client.Node))
+    for r in results:
+        if((r[0]["name"]) == usuario):
+            valor = 1
+            return valor
+    valor = 0
+    return valor
+    
+#------------------Metodo para ingresar un usuario-------------------------
+def ingresarUsuario(usuario):
+    nuevoUsuario = db.nodes.create(name=usuario)
+    Usuarios.add(nuevoUsuario)
+
+#-----------------Anadir relacion de usuario-videojuego---------------------
+def relacionUsuarioVideojuego(nomUsuario, arregloRecomendaciones):
+    resultados = []
+    q = 'MATCH (u: Usuarios) WHERE u.name="'+nomUsuario+'" RETURN u'
+    results1 = db.query(q, returns=(client.Node))
+    for l in arregloRecomendaciones:
+        q = 'MATCH (u: Videojuego) WHERE u.name="'+l+'" RETURN u'
+        results2 = db.query(q, returns=(client.Node))
+        resultados.append(results2)
+    for r in results1:
+        for s in resultados:
+            for i in s:
+                r[0].relationships.create("VJ",i[0]) #Se hace la relacion
+                
 #-------------------Metodo que busca las recomendaciones Finales-----------
 def buscarRecomendacionesFinales(maximo,listaC,listaJ):
     listaPosiciones = []

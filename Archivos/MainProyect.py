@@ -14,6 +14,8 @@ listaRecomendaciones = []
 listaJuegos = ["Mortal Combat","Super Smash Bros","Dragon Ball Fighters","PacMan","Contra, The Alien Wars","Sonic the Hedgehog","Mario Bros","MegaMan X","Donkey Kong","Kirby","Quake","Halo","Call of Duty","Grand Theft Auto","Gears of War","Dead Space","Metal Slug","Space Invaders","R-type","Age Of Empires","Star Craft","War Craft","Civilization IV","Empire Total War","Advance Wars","Worms","Angry Birds","Gun Bound","MarioKart","Need For Speed","Iron Warriors","H.A.W.X.","Assault Horizon","Mine Craft","Clash of Clans","Gigies Skylines","ANNO","SimCity","Banished","F-Zero","Out Run","Proyect CARS","FIFA Series","Mario Strikers","WiiSports","Wii Fit","Mario & Sonic in the olimpyc games","The legend of Zelda","Tomb Rider","God of war","Silent Hill","The last of Us","Resident Evil","Assassins Creed","MetalGear","Dishonored","StarWars","Final Fantasy","Pokemon","Dungeon & Dragons","Watch Dogs","Horizon Zero Dawn","Prototype","Candy Crush","Tetris","Portal","ZUMA","Q.U.B.E.","Lips","Sing it Disney","Dance Central","JustDance","Guitar HERO","DJ HERO","Rock Revolution"]
 listaCoincidencias = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 desicion = 0
+desicion2 = 0
+verificacionUsuario = 0
 
 #--------Iniciamos el menu----------------------
 while desicion != 2:
@@ -25,6 +27,12 @@ while desicion != 2:
     desicion = int(input("Ingrese su elecccion: "))
 
     if(desicion == 1):
+#------------------Se le pide el nombre al usuario------------------------
+        nombre = raw_input("Ingrese su nombre: ")
+        apellido = raw_input("Ingrese su apellido: ")
+        nombreCompleto = nombre+" "+apellido
+        nombreCompleto = nombreCompleto.upper()
+        
 #------------------Se toma la caracteristica de la persona----------------        
         print("\nQue tipo de persona se considera?\n1.Extrovertida\n2.Introvertida\n3.Atrevida")
         caracteristicas = int(input("Ingrese su eleccion: "))
@@ -35,6 +43,8 @@ while desicion != 2:
             caracteristica = "Introvertida"
         elif(caracteristicas == 3):
             caracteristica = "Atrevida"
+        else:
+            pass
 
         listaCoincidencias = RecomendacionCaracteristica(caracteristica,listaJuegos,listaCoincidencias)
 #------------------Se toma la inteligencia cognitiva de la persona----------------        
@@ -49,6 +59,8 @@ while desicion != 2:
             inteligencia = "Motora"
         elif(inteligencias == 4):
             inteligencia = "Musical-Ritmica"
+        else:
+            pass
         
         listaCoincidencias = RecomendacionInteligencia(inteligencia,listaJuegos,listaCoincidencias)
 #------------------Se toma la edad de la persona----------------
@@ -63,6 +75,8 @@ while desicion != 2:
             edad = "18-70"
         elif(edades == 4):
             edad = "Todas las Edades"
+        else:
+            pass
         
         listaCoincidencias = RecomendacionEdad(edad,listaJuegos,listaCoincidencias)
 #------------------Se toma el genero de videojuego de la persona----------------
@@ -89,7 +103,9 @@ while desicion != 2:
             genero = "PUZZLE"
         elif(generos == 10):
             genero = "MUSICAL"
-            
+        else:
+            pass
+        
         listaCoincidencias = RecomendacionGenero(genero,listaJuegos,listaCoincidencias)
 #------------------Se toma el subgenero de videojuego de la persona----------------
         print("\nElija el sub-genero de videojuegos que mas le llama la atencion\n1.Lucha\n2.Arcade\n3.Plataformas\n4.Primera-Persona\n5.Tercera-Persona\n6.ShootemUp\n7.TiempoReal\n8.Turnos\n9.Artilleria\n10.Vehiculos\n11.Construccion\n12.Carreras\n13.AccionAventura\n14.SurvivalHorror\n15.Sigilo\n16.Karaoke\n17.Baile\n18.Instrumentos")
@@ -131,16 +147,43 @@ while desicion != 2:
             subgenero = "Baile"
         elif(subgeneros == 18):
             subgenero = "Instrumentos Musicales"
-#------------------Se revisa las Coincidencias a lo respondido por el usuario-----------------------            
+        else:
+            pass
+
         listaCoincidencias = RecomendacionSubGenero(subgenero,listaJuegos,listaCoincidencias)
 
-        valorMaximo = max(listaCoincidencias)
+#------------------Se toma el dato de la persona mas cerca que conoce un usuario------------
+        imprimirUsuarios(nombreCompleto)
+        conocido = raw_input("\nIngrese el nombre completo de la persona que sea mas cercana a usted (familiar, amigo, ect)\nEn caso de que no conozca a nadie ingrese NO: ")
+        conocido = conocido.upper()
+        if(conocido != "NO"):
+            verificacionUsuario = buscarUsuarioDentroGrafo(conocido)
+            if(verificacionUsuario == 1):
+                listaCoincidencias = RecomendacionConocidos(conocido,listaJuegos,listaCoincidencias)
+            else:
+                print("\nEl nombre que ingreso no fue valido\n")
+        else:
+            pass
+
 #------------------Se da una lista de recomendaciones----------------
+        valorMaximo = max(listaCoincidencias)
+
+#------------------Se revisa las Coincidencias a lo respondido por el usuario-----------------------          
         listaRecomendaciones = buscarRecomendacionesFinales(valorMaximo,listaCoincidencias,listaJuegos)
+
 #------------------Se imprimen las recomendaciones-------------------
         print("\nEstas son las recomendaciones de Videojuegos que podrian interesarle al usuario:\n")
         print(listaRecomendaciones)
 
+#------------------Se realiza el ingreso de la informacion nueva obtenida------------
+#------------------Se busca si el usuario existe o no para realizar las relaciones---
+        busqueda = buscarUsuarioDentroGrafo(nombreCompleto)
+        if(busqueda == 1):
+            relacionUsuarioVideojuego(nombreCompleto,listaRecomendaciones)
+        else:
+            ingresarUsuario(nombreCompleto)
+            relacionUsuarioVideojuego(nombreCompleto,listaRecomendaciones)
+            
         
 
 
