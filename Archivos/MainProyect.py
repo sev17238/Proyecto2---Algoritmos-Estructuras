@@ -24,8 +24,7 @@ while desicion != 2:
     listaCoincidencias = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 #-------------Se pregunta si desea una recomendacion-----------------    
     print ("\nQue desea hacer?\n1.Recomendar videojuegos\n2.Salir de la aplicacion")
-    desicion = int(input("Ingrese su elecccion: "))
-
+    desicion = leer_entero("Ingrese su elecccion: ")
     if(desicion == 1):
 #------------------Se le pide el nombre al usuario------------------------
         nombre = raw_input("Ingrese su nombre: ")
@@ -35,7 +34,7 @@ while desicion != 2:
         
 #------------------Se toma la caracteristica de la persona----------------        
         print("\nQue tipo de persona se considera?\n1.Extrovertida\n2.Introvertida\n3.Atrevida")
-        caracteristicas = int(input("Ingrese su eleccion: "))
+        caracteristicas = leer_entero("Ingrese su eleccion: ")
 
         if(caracteristicas == 1):
             caracteristica = "Extrovertida"
@@ -49,7 +48,7 @@ while desicion != 2:
         listaCoincidencias = RecomendacionCaracteristica(caracteristica,listaJuegos,listaCoincidencias)
 #------------------Se toma la inteligencia cognitiva de la persona----------------        
         print("\nQue inteligencia considera que se relaciona mas con usted?\n1.Logica\n2.Espacial\n3.Motora\n4.Musical-Ritmica")
-        inteligencias = int(input("Ingrese su eleccion: "))
+        inteligencias = leer_entero("Ingrese su eleccion: ")
 
         if(inteligencias == 1):
             inteligencia = "Logica"
@@ -65,7 +64,7 @@ while desicion != 2:
         listaCoincidencias = RecomendacionInteligencia(inteligencia,listaJuegos,listaCoincidencias)
 #------------------Se toma la edad de la persona----------------
         print("\nCual es su edad? Elija un rango de edad\n1.4-11 anos\n2.12-17 anos\n3.18-70 anos\n4.Sin especificar")
-        edades = int(input("Ingrese su eleccion: "))
+        edades = leer_entero("Ingrese su eleccion: ")
 
         if(edades == 1):
             edad = "4-11"
@@ -81,7 +80,7 @@ while desicion != 2:
         listaCoincidencias = RecomendacionEdad(edad,listaJuegos,listaCoincidencias)
 #------------------Se toma el genero de videojuego de la persona----------------
         print("\nElija el genero de videojuegos que mas le llama la atencion\n1.Accion\n2.Disparos\n3.Estrategia\n4.Simulacion\n5.Deporte\n6.Aventura\n7.Rol\n8.SandBox\n9.Puzzle\n10.Musical")
-        generos = int(input("Ingrese su eleccion: "))
+        generos = leer_entero("Ingrese su eleccion: ")
 
         if(generos == 1):
             genero = "ACCION"
@@ -109,7 +108,7 @@ while desicion != 2:
         listaCoincidencias = RecomendacionGenero(genero,listaJuegos,listaCoincidencias)
 #------------------Se toma el subgenero de videojuego de la persona----------------
         print("\nElija el sub-genero de videojuegos que mas le llama la atencion\n1.Lucha\n2.Arcade\n3.Plataformas\n4.Primera-Persona\n5.Tercera-Persona\n6.ShootemUp\n7.TiempoReal\n8.Turnos\n9.Artilleria\n10.Vehiculos\n11.Construccion\n12.Carreras\n13.AccionAventura\n14.SurvivalHorror\n15.Sigilo\n16.Karaoke\n17.Baile\n18.Instrumentos")
-        subgeneros = int(input("Ingrese su eleccion: "))
+        subgeneros = leer_entero("Ingrese su eleccion: ")
 
         if(subgeneros == 1):
             subgenero = "Lucha"

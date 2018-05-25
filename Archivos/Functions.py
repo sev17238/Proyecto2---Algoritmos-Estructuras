@@ -13,7 +13,7 @@ from neo4jrestclient.client import GraphDatabase
 from neo4jrestclient import client
 #from neo4j.v1 import GraphDatabase
 
-db = GraphDatabase("http://localhost:7474", username="neo4j", password="1234567")
+db = GraphDatabase("http://localhost:7474", username="neo4j", password="12345")
 #uri = "bolt://localhost:7687"
 #driver = GraphDatabase.driver(uri, auth=("neo4j", "12345"))
 
@@ -150,3 +150,16 @@ def buscarRecomendacionesFinales(maximo,listaC,listaJ):
     for index in listaPosiciones:
         listaRecomendaciones.append(listaJ[index])
     return listaRecomendaciones
+
+#--------------------------------------------------------
+#funcion para ingresar un valor y asegurar que es entero.
+#--------------------------------------------------------
+def leer_entero(mensaje):
+    valido = False
+    while not valido:
+        try:
+            entero = int(raw_input(mensaje))
+            valido = True
+        except:
+            print "El dato no es un entero"
+    return entero
